@@ -8,8 +8,8 @@ import * as setupPython from 'setup-python/lib/find-python'
 async function run() {
     try {
       if (core.getInput("setup-python") == "true") {
-        // Use setup-python to ensure that python >=3.6 is installed
-        const installed = await setupPython.findPythonVersion('>=3.6', 'x64')
+        // Use setup-python to ensure that python 3.6 or 3.7 is installed
+        const installed = await setupPython.findPythonVersion('>=3.6,<=3.7', 'x64')
         core.info(`Successfully setup ${installed.impl} (${installed.version})`)
       }
 
