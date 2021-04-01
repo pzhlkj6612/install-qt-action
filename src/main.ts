@@ -37,6 +37,11 @@ async function run() {
           pythonName = "python";
         }
 
+        // For python 3.8+
+        if (process.platform == "win32") {
+          delete process.env['VSCMD_ARG_TGT_ARCH'];
+        }
+
         await exec.exec(pythonName + " -m pip install setuptools wheel");
         await exec.exec(pythonName + " -m pip install \"py7zr" + core.getInput("py7zrversion") + "\"");
         await exec.exec(pythonName + " -m pip install \"aqtinstall" + core.getInput("aqtversion") + "\"");
