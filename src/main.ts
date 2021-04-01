@@ -37,9 +37,9 @@ async function run() {
           pythonName = "python";
         }
 
-        await exec.exec(pythonName + " -m pip install setuptools wheel");
-        await exec.exec(pythonName + " -m pip install \"py7zr" + core.getInput("py7zrversion") + "\"");
-        await exec.exec(pythonName + " -m pip install \"aqtinstall" + core.getInput("aqtversion") + "\"");
+        await exec.exec(pythonName + " -m pip install --only-binary :all: setuptools wheel");
+        await exec.exec(pythonName + " -m pip install --only-binary :all: \"py7zr" + core.getInput("py7zrversion") + "\"");
+        await exec.exec(pythonName + " -m pip install --only-binary :all: \"aqtinstall" + core.getInput("aqtversion") + "\"");
         let host = core.getInput("host");
         const target = core.getInput("target");
         let arch = core.getInput("arch");
