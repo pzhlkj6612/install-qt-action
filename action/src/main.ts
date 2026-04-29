@@ -423,7 +423,9 @@ const run = async (): Promise<void> => {
           ...flaggedList("--modules", inputs.modules),
           ...inputs.extra,
         ];
-        await execPython("aqt", qtArgs);
+        await execPython("aqt", qtArgs).then(exitCode => {
+          core.info(`!!!!!!!!!! exitCode = ${exitCode}`);
+        });
       } else {
         const qtArgs = [
           "install-qt",
