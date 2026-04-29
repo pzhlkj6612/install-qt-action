@@ -4,12 +4,16 @@ import * as os from "os";
 import * as path from "path";
 import * as process from "process";
 
-import * as cache from "@actions/cache";
 import * as core from "@actions/core";
 import { exec, getExecOutput } from "@actions/exec";
 
 import * as glob from "glob";
 import { compare, CompareOperator } from "compare-versions";
+
+// `@actions/cache` v6 is an ESM-only package, so it must be loaded with a
+// native dynamic `import()` from this CommonJS module.
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const importActionsCache = async () => import("@actions/cache");
 
 const compareVersions = (v1: string, op: CompareOperator, v2: string): boolean => {
   return compare(v1, v2, op);
@@ -384,6 +388,7 @@ const run = async (): Promise<void> => {
   // Restore internal cache
   let internalCacheHit = false;
   if (inputs.cache) {
+    const cache = await importActionsCache();
     const cacheHitKey = await cache.restoreCache([inputs.dir], inputs.cacheKey);
     if (cacheHitKey) {
       core.info(`Automatic cache hit with key "${cacheHitKey}"`);
@@ -480,6 +485,7 @@ const run = async (): Promise<void> => {
 
   // Save automatic cache
   if (!internalCacheHit && inputs.cache) {
+    const cache = await importActionsCache();
     const cacheId = await cache.saveCache([inputs.dir], inputs.cacheKey);
     core.info(`Automatic cache saved with id ${cacheId}`);
   }
