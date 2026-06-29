@@ -13,6 +13,7 @@ import { compare, CompareOperator } from "compare-versions";
 import "source-map-support/register.js";
 
 console.log("hello, world!");
+console.log("hello, GitHub!");
 
 const compareVersions = (v1: string, op: CompareOperator, v2: string): boolean => {
   return compare(v1, v2, op);
