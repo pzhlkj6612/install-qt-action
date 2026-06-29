@@ -1,4 +1,4 @@
-# `install-qt-action` test
+# `install-qt-action` test test2
 
 Installing Qt on Github Actions workflows manually is the worst.
 
